@@ -38,5 +38,5 @@ Require python 3, Tk, numpy imports
 cr>99     : ARGS ERRORS
  
 
-## playlist file generated : 
+## sample of playlist file generated : 
 ![image](https://user-images.githubusercontent.com/47532310/158772723-1ba18275-2907-48f5-ac83-72da8bfe5fe6.png)

@@ -1,7 +1,7 @@
 # RetroArch-PlayListCreator
 
 
-Simple python script that scan a folder to get roms (expected as zip files), compute the CRC32 and create the RetroArch playlist (in retroarch/cores/playplist) and Thumbnails folder structure.
+Simple python script that scans a folder to get roms (expected as zip files), compute the CRC32 and create the RetroArch playlist v1.5 (in retroarch/cores/playlist) and Thumbnails folder structure.
 
 
 Require python 3, Tk, numpy imports

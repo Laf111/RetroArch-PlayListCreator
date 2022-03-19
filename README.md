@@ -7,7 +7,12 @@ Simple python script that scans a folder to get roms (expected as zip files), co
 Require python 3, Tk, numpy imports
 
 
-## usage: **RetroArch-PlayListCreator.py**
+## usage: 
+
+You call call the script without args or use the following syntax (you can pass the number of those args you want)
+
+
+**RetroArch-PlayListCreator.py**
 
 [-romsFolderPath ROMS_FOLDER_PATH]
 

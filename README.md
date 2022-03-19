@@ -18,18 +18,15 @@ You call call the script without args or use the following syntax (you can pass 
 
 [-coreFilePath CORE_FILE_PATH]
 
-[-coreName CORE_NAME*]
+[-coreName CORE_NAME]
 
-[-labelDisplayMode LABEL_DISPLAY_MODE*]
+[-labelDisplayMode LABEL_DISPLAY_MODE]
 
-[-rightThumbnailMode RIGHT_THUMBNAIL_MODE*]
+[-rightThumbnailMode RIGHT_THUMBNAIL_MODE]
 
-[-leftThumbnailMode LEFT_THUMBNAIL_MODE*]
+[-leftThumbnailMode LEFT_THUMBNAIL_MODE]
 
-[-sortMode SORT_MODE*]
-
-
-(* for optionals args)
+[-sortMode SORT_MODE]
 
 
 ## return codes:

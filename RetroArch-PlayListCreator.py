@@ -19,15 +19,10 @@ try:
     from tkinter import filedialog
     from tkinter import *
 
-
-    import concurrent.futures
-    from concurrent.futures import ThreadPoolExecutor
-
     import numpy as np
 
     import zlib
 
-    import threading
 
 except Exception as e :
     print("Python import failed : %s" %e)
@@ -60,16 +55,6 @@ def browseToDir():
     root.withdraw()
     return filedialog.askdirectory()
 
-def checkFile(f, relativePath, root):
-    global mutex
-
-    mutex.acquire()
-    print("Checking "+str(relativePath)+"...")
-    mutex.release()
-
-    crc32 = computeCrc32(os.path.join(root, f))
-
-
 
 #----------------------------------------------------------------------------------------------------------
 # MAIN PROGRAM
@@ -92,12 +77,6 @@ if __name__ == '__main__':
     else:
         os.nice(-10)
 
-    # define a mutex for working on output files from threads
-    mutex = threading.Lock()
-
-    # Pool of os.cpu_count() threads :
-    nbThreads = os.cpu_count()
-
     returnCode = 0
     homeFolder = os.path.dirname(os.path.abspath(__file__))
 
@@ -116,27 +95,6 @@ if __name__ == '__main__':
     # read input parameters
     args = parser.parse_args()
     nbArgs = len(sys.argv)
-    if not nbArgs > 1:
-
-        print(" ===================================================")
-        print(" usage: RetroArch-PlayListCreator.py\n"+\
-              "        [-romsFolderPath ROMS_FOLDER_PATH]\n"+\
-              "        [-coreFilePath CORE_FILE_PATH]\n"+\
-              "        [-coreName CORE_NAME*]\n"+\
-              "        [-labelDisplayMode LABEL_DISPLAY_MODE*]\n"+\
-              "        [-rightThumbnailMode RIGHT_THUMBNAIL_MODE*]\n"+\
-              "        [-leftThumbnailMode LEFT_THUMBNAIL_MODE*]\n"+\
-              "        [-sortMode SORT_MODE*]\n\n"+\
-              "        (* for optionals args)")
-        print(" ---------------------------------------------------\n"+\
-              " return codes:\n"+
-              "        0         : OK\n"+\
-              "        0<cr<50   : WARNINGS\n"+\
-              "        49<cr<100 : ERRORS\n"+\
-              "        cr>99     : ARGS ERRORS")
-        print(" ===================================================")
-        exit(100)
-
     version="V1-0"
     print("\n -%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-")
     print("| RetroArch PlayList Creator "+version+" |")
@@ -217,9 +175,10 @@ if __name__ == '__main__':
         leftThumbnailMode = 1
         sortMode = 0
 
-    playListFile = os.path.basename(coreFilePath).replace(".rpx", ".lpl")
-
-    print("\n > Create "+playListFile+" for "+retroArchPath+"?\n")
+    playListFileName = os.path.basename(coreFilePath).replace(".rpx", ".lpl")
+    playListFile = retroArchPath+os.path.sep+"cores"+os.path.sep+"playlists"+os.path.sep+playListFileName
+    
+    print("\n > Create "+playListFileName+" for "+retroArchPath+"?\n")
 
     print(" ===================================================")
     print(" Roms_Folder_Path     = "+romsFolderPath)
@@ -287,7 +246,7 @@ if __name__ == '__main__':
                               "      \"core_path\": \"sd:/retroarch/cores/"+coreName+".rpx\",\n"+\
                               "      \"core_name\": \""+str(coreName)+"\",\n"+\
                               "      \"crc32\": \""+str(crc32)+"|crc\",\n"+\
-                              "      \"db_name\": \""+str(playListFile)+"\"\n"+\
+                              "      \"db_name\": \""+str(playListFileName)+"\"\n"+\
                               "    },\n"
                 else:
                     romPart = "    {\n"+\
@@ -296,7 +255,7 @@ if __name__ == '__main__':
                               "      \"core_path\": \"sd:/retroarch/cores/"+coreName+"\",\n"+\
                               "      \"core_name\": \""+str(coreName)+"\",\n"+\
                               "      \"crc32\": \""+str(crc32)+"|crc\",\n"+\
-                              "      \"db_name\": \""+str(playListFile)+"\"\n"+\
+                              "      \"db_name\": \""+str(playListFileName)+"\"\n"+\
                               "    }\n"
                 f.write(romPart)
         else:
@@ -307,20 +266,20 @@ if __name__ == '__main__':
         f.write(end)
 
         # create folders for thumbnails
-        folder = retroArchPath+os.path.sep+"thumbnails"+os.path.sep+playListFile.split(".lpl")[0]+os.path.sep+"Named_Boxarts"
+        folder = retroArchPath+os.path.sep+"thumbnails"+os.path.sep+playListFileName.split(".lpl")[0]+os.path.sep+"Named_Boxarts"
 
         if not os.path.exists(folder):
             os.makedirs(folder)
-        folder = retroArchPath+os.path.sep+"thumbnails"+os.path.sep+playListFile.split(".lpl")[0]+os.path.sep+"Named_Snaps"
+        folder = retroArchPath+os.path.sep+"thumbnails"+os.path.sep+playListFileName.split(".lpl")[0]+os.path.sep+"Named_Snaps"
         if not os.path.exists(folder):
             os.makedirs(folder)
-        folder = retroArchPath+os.path.sep+"thumbnails"+os.path.sep+playListFile.split(".lpl")[0]+os.path.sep+"Named_Titles"
+        folder = retroArchPath+os.path.sep+"thumbnails"+os.path.sep+playListFileName.split(".lpl")[0]+os.path.sep+"Named_Titles"
         if not os.path.exists(folder):
             os.makedirs(folder)
 
     timeStr = "{:.2f}".format(time.time() - start_time)
     print("=====================================================================")
-    print(" retroarch"+os.path.sep+"cores"+os.path.sep+"playlist"+os.path.sep+playListFile+" created successfully\n")
+    print(" "+playListFile+" created successfully\n")
     print(" you can move your images to folders in "+os.path.dirname(folder))
     print(" \n"+str(nbf)+" games treated in "+timeStr+" seconds")
     print("=====================================================================")

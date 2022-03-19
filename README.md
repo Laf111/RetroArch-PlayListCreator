@@ -29,6 +29,9 @@ You call call the script without args or use the following syntax (you can pass 
 [-sortMode SORT_MODE]
 
 
+For example : RetroArch-PlayListCreator.py -romsFolderPath "D:\retroarch\Downloads\roms\MAME"
+
+
 ## return codes:
 
 0         : OK

@@ -143,37 +143,30 @@ if __name__ == '__main__':
 
     intPattern = re.compile("^[0-9]$")
 
-    if nbArgs > 2:
-        labelDisplayMode = args.Label_Display_Mode
-        if labelDisplayMode == None:
-            while True:
-                labelDisplayMode = input("Enter the value of labelDisplayMode (0 to set default)\t: ")
-                if intPattern.match(labelDisplayMode):
-                    break
-        rightThumbnailMode = args.Right_Thumbnail_Mode
-        if rightThumbnailMode == None:
-            while True:
-                rightThumbnailMode = input("Enter the value of rightThumbnailMode (2 to set default): ")
-                if intPattern.match(rightThumbnailMode):
-                    break
-        leftThumbnailMode = args.Left_Thumbnail_Mode
-        if leftThumbnailMode == None:
-            while True:
-                leftThumbnailMode = input("Enter the value of leftThumbnailMode (1 to set default)\t: ")
-                if intPattern.match(leftThumbnailMode):
-                    break
-        sortMode = args.Sort_Mode
-        if sortMode == None:
-            while True:
-                sortMode = input("Enter the value of sortMode (0 to set default)\t\t: ")
-                if intPattern.match(sortMode):
-                    break
-    else:
-        # default values
-        labelDisplayMode = 0
-        rightThumbnailMode = 2
-        leftThumbnailMode = 1
-        sortMode = 0
+    labelDisplayMode = args.Label_Display_Mode
+    if labelDisplayMode == None:
+        while True:
+            labelDisplayMode = input("Enter the value of labelDisplayMode (0 to set default)\t: ")
+            if intPattern.match(labelDisplayMode):
+                break
+    rightThumbnailMode = args.Right_Thumbnail_Mode
+    if rightThumbnailMode == None:
+        while True:
+            rightThumbnailMode = input("Enter the value of rightThumbnailMode (2 to set default): ")
+            if intPattern.match(rightThumbnailMode):
+                break
+    leftThumbnailMode = args.Left_Thumbnail_Mode
+    if leftThumbnailMode == None:
+        while True:
+            leftThumbnailMode = input("Enter the value of leftThumbnailMode (1 to set default)\t: ")
+            if intPattern.match(leftThumbnailMode):
+                break
+    sortMode = args.Sort_Mode
+    if sortMode == None:
+        while True:
+            sortMode = input("Enter the value of sortMode (0 to set default)\t\t: ")
+            if intPattern.match(sortMode):
+                break
 
     playListFileName = os.path.basename(coreFilePath).replace(".rpx", ".lpl")
     playListFile = retroArchPath+os.path.sep+"cores"+os.path.sep+"playlists"+os.path.sep+playListFileName
